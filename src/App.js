@@ -12,10 +12,13 @@ import './App.css';
 import CartNotificationBar from "./Pages/AddtocartBar";
 import Products from "./Pages/Products";
 import PaymentForm from "./Pages/Payment";
+import UserCard from "./Pages/Users/UserCard";
+import Users from "./Pages/Users/Users";
 // import LandingPage from "./Pages/LandingPage";
 
 const App = () => {
   const [products, setProducts] = useState([]);
+  const [users, setUsers] = useState([]);
   const [notificationBarVisible, setNotificationBarVisible] = useState(false);
 
   useEffect(() => {
@@ -36,6 +39,24 @@ const App = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const usersResponse = await axios.get("https://jsonplaceholder.typicode.com/users");
+        const usersData = usersResponse.data.map(user => ({
+          ...user,
+          type: "user"
+        }));
+        setUsers(usersData);
+        console.log(usersData);
+      } catch (error) {
+        alert("Error fetching data: " + error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <Router>
       <Box minWidth={'500px'} >
@@ -46,6 +67,7 @@ const App = () => {
           <Route path="/cart" element={<CartPage setNotificationBarVisible={setNotificationBarVisible}  />} /> {/* Route for CartPage */}
           <Route path="/product/:id" element={<FullCardPage products={products}  setNotificationBarVisible={setNotificationBarVisible} />} /> {/* Pass products to FullCardPage */}
         <Route path="/products" element={<Products products={products} />} />
+        <Route path="/users" element={<Users user={users} />} />
         <Route path="/payment" element={<PaymentForm />} />
         </Routes>
         {notificationBarVisible && <CartNotificationBar />}

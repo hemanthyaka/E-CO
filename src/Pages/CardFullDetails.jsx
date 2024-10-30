@@ -124,6 +124,7 @@ const FullCardPage = ({ products, setNotificationBarVisible }) => {
               overflowY: 'auto',
               maxHeight: { xs: '150px', md: '200px' },
             }}
+            className='custom-scrollbar'
           >
             {product.description}
           </Typography>

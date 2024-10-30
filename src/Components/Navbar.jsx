@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
 import { useNavigate, useLocation } from 'react-router-dom'; // Import useLocation
 
-const pages = ['Products', 'Pricing', 'Cart'];
+const pages = ['Products', 'Users', 'Cart'];
 const settings = [];
 
 function Navbar() {
@@ -43,6 +43,9 @@ function Navbar() {
     switch (page) {
       case 'Products':
         navigate('/products');
+        break;
+      case 'Users':
+        navigate('/users');
         break;
       case 'Cart':
         navigate('/cart');
