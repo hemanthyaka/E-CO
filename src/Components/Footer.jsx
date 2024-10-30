@@ -8,7 +8,7 @@ const Footer = () => {
   return (
     <Box
       sx={{
-        backgroundColor: "#ff9800",
+        backgroundColor: "#000",
         color: "white",
         padding: "40px 20px",
         bottom:0,
@@ -95,7 +95,7 @@ const Footer = () => {
             />
             <Button
               variant="contained"
-              sx={{ backgroundColor: "#FF4081", color: "white" }}
+              sx={{ backgroundColor: "#ff9800", color: "white" }}
             >
               Subscribe
             </Button>

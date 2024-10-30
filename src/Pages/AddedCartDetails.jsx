@@ -1,50 +1,57 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box, Typography, Divider, Button, Snackbar, Alert, CircularProgress } from '@mui/material';
+import { Box, Typography, Divider, Button, Snackbar, Alert, CircularProgress, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { resetCart } from '../Redux/Action'; // Import the resetCart action
+import { resetCart, IncrementQuantity, DecrementQuantity } from '../Redux/Action'; // Import quantity actions
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 const CartPage = ({ setNotificationBarVisible }) => {
   const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [loading, setLoading] = useState(false); // State for loading
-  const [paymentStatus, setPaymentStatus] = useState(null); // Track payment success or failure
+  const [loading, setLoading] = useState(false);
+  const [paymentStatus, setPaymentStatus] = useState(null);
   const navigate = useNavigate();
 
-  // Use useEffect to set the notification bar visibility on component mount
+  // Conversion rate (example: 1 USD = 83 INR)
+  const convertToINR = (usd) => usd * 83;
+
   useEffect(() => {
     setNotificationBarVisible(false);
-  }, [setNotificationBarVisible]); // Only run this effect when setNotificationBarVisible changes
+  }, [setNotificationBarVisible]);
 
   const handleSnackbarClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
+    if (reason === 'clickaway') return;
     setSnackbarOpen(false);
   };
 
   const handlePayment = () => {
-    setLoading(true); // Start loading animation
-
-    // Simulate payment processing
+    setLoading(true);
     setTimeout(() => {
-      const isSuccess = Math.random() > 0.1; // Random success or failure
-
+      const isSuccess = Math.random() > 0.1;
       if (isSuccess) {
         setPaymentStatus('success');
-        setSnackbarOpen(true); // Show success snackbar
-        setLoading(false); // Stop loading
+        setSnackbarOpen(true);
+        setLoading(false);
         setTimeout(() => {
-          navigate('/'); // Redirect to home
-          dispatch(resetCart()); // Reset cart state
+          navigate('/');
+          dispatch(resetCart());
         }, 2000);
       } else {
         setPaymentStatus('failure');
-        setSnackbarOpen(true); // Show failure snackbar
-        setLoading(false); // Stop loading
+        setSnackbarOpen(true);
+        setLoading(false);
       }
     }, 4000);
+  };
+
+  const handleIncrement = (id) => {
+    dispatch(IncrementQuantity(id));
+  };
+
+  const handleDecrement = (id) => {
+    dispatch(DecrementQuantity(id));
   };
 
   if (cartItems.length === 0) {
@@ -57,37 +64,50 @@ const CartPage = ({ setNotificationBarVisible }) => {
     );
   }
 
-  const totalAmount = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const totalAmount = cartItems.reduce((sum, item) => sum + convertToINR(item.price).toFixed(2) * item.quantity, 0);
 
   return (
-    <Box p={3} width='500px' margin={'auto'} paddingTop="80px" minHeight={'80vh'}   >
-      <Typography variant="h5" align="center" mb={2}>
+    <Box p={3} width='500px' margin={'auto'} paddingTop="80px" minHeight={'80vh'}>
+      <Typography variant="h5" align="center" mb={2} fontFamily={'Outfit'} >
         YOUR CART
       </Typography>
       {cartItems.map((item) => (
-        <Box key={item.id} mb={2} p={2} border="2px solid #000" bgcolor='#ffa726' color={'#fff'} borderRadius="8px" fontFamily={'Outfit'}>
+        <Box key={item.id} mb={2} position={'relative'} p={2} border="2px solid #000" bgcolor='#ffa726' color={'#fff'} borderRadius="8px" fontFamily={'Outfit'}>
           <Typography variant="body1" fontWeight="bold" fontFamily={'Outfit'}>
             {item.title}
           </Typography>
           <Typography variant="body2" fontFamily={'Outfit'}>
-            Price: ${item.price} x {item.quantity}
+            Price:₹{convertToINR(item.price).toFixed(2)} x {item.quantity}
           </Typography>
+          <Box display="flex" alignItems="center" mt={1} border="1px solid #fff" borderRadius={'8px'} width="110px" position={'absolute'} right={10} top={30} bgcolor='#fff' >
+            <IconButton onClick={() => handleDecrement(item.id)} size="small">
+              <RemoveIcon sx={{ color: '#f57c00' }} />
+            </IconButton>
+            <Typography mx={2}  fontFamily={'Outfit'} color={'#f57c00'} >{item.quantity}</Typography>
+            <IconButton onClick={() => handleIncrement(item.id)} size="small">
+              <AddIcon sx={{ color: '#f57c00' }} />
+            </IconButton>
+          </Box>
           <Typography variant="body2" fontFamily={'Outfit'}>
-            Total: ${(item.price * item.quantity).toFixed(2)}
+            Total: ₹{(convertToINR(item.price).toFixed(2) * item.quantity).toFixed(2)}
           </Typography>
         </Box>
       ))}
       <Divider />
       <Box mt={2}>
         <Typography variant="h6" align="center" fontFamily={'Outfit'}>
-          Total Amount: ${totalAmount.toFixed(2)}
+          Total Amount: ₹{totalAmount.toFixed(2)}
         </Typography>
       </Box>
-      <Button  variant="contained" sx={{bgcolor:'#f57c00',fontFamily:'Outfit'}} fullWidth onClick={handlePayment} disabled={loading}>
-        {loading ? 'Processing...' : `Pay $${totalAmount.toFixed(2)}`}
-      </Button>
-
-      {/* Loading Animation */}
+      <Button
+  variant="contained"
+  sx={{ bgcolor: '#f57c00', fontFamily: 'Outfit' }}
+  fullWidth
+  onClick={handlePayment}
+  disabled={loading}
+>
+  {loading ? 'Processing...' : `Pay ₹${totalAmount.toFixed(2)}`}
+</Button>
       {loading && (
         <Box
           position="fixed"
@@ -99,12 +119,11 @@ const CartPage = ({ setNotificationBarVisible }) => {
         </Box>
       )}
 
-      {/* Snackbar Component */}
       <Snackbar
         open={snackbarOpen}
         autoHideDuration={3000}
         onClose={handleSnackbarClose}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }} // Position at the top center
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       >
         <Alert onClose={handleSnackbarClose} severity={paymentStatus === 'success' ? 'success' : 'error'} sx={{ width: '100%' }}>
           {paymentStatus === 'success' ? 'Payment Successful!' : 'Payment Failed! Please try again.'}

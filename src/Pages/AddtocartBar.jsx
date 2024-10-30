@@ -16,7 +16,7 @@ const CartNotificationBar = () => {
         position: 'fixed',
         bottom: 0,
         width: '100%',
-        backgroundColor: '#f57c00',
+        backgroundColor: '#ffb74d',
         border:'2px solid #fff',
         color: 'white',
         textAlign: 'center',

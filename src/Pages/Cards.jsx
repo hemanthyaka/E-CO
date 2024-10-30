@@ -1,4 +1,3 @@
-// ResponsiveCard.js
 import React, { useState } from 'react';
 import {
   Card,
@@ -9,7 +8,6 @@ import {
   CardActions,
   Box,
   IconButton,
-  // useTheme,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { AddToCart, RemoveFromCart, IncrementQuantity, DecrementQuantity } from '../Redux/Action';
@@ -21,10 +19,12 @@ const ResponsiveCard = ({ data }) => {
   const [isHovered, setIsHovered] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const theme = useTheme();
   const cartItems = useSelector((state) => state.cart.items);
   const lastAddedProductId = useSelector((state) => state.cart.lastAddedProductId);
   const cartItem = cartItems.find((item) => item.id === data.id);
+
+  // Conversion rate (example: 1 USD = 83 INR)
+  const convertToINR = (usd) => usd * 83;
 
   const handleAddToCart = (event) => {
     event.stopPropagation();
@@ -76,11 +76,9 @@ const ResponsiveCard = ({ data }) => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          // height: { xs: '180px', sm: '200px', md: '250px' },
           overflow: 'hidden',
           position: 'relative',
           borderRadius: '4px 4px 0 0',
-          '&:hover .image': { transform: 'scale(0.7)' },
           width: '100%',
           height:'250px',
           p:10,
@@ -114,7 +112,9 @@ const ResponsiveCard = ({ data }) => {
         >
           {data.title}
         </Typography>
-        <Typography fontFamily={'Outfit'} fontWeight={600} >${data.price}</Typography>
+        <Typography fontFamily={'Outfit'} fontWeight={600}>
+          ₹{convertToINR(data.price).toFixed(2)}
+        </Typography>
         <Typography
           variant="body2"
           color="text.secondary"
@@ -131,91 +131,91 @@ const ResponsiveCard = ({ data }) => {
         </Typography>
       </CardContent>
       <CardActions
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        pb: 2,
-        px: 2,
-        width: '100%',
-        fontFamily:'Outfit',
-        backgroundColor: isHovered ? '#ffa726' : '#ffa726', // Change background color on hover
-      }}
-    >
-      {cartItem && lastAddedProductId === data.id ? (
-        <Box
-          display="flex"
-          flexDirection="column"
-          alignItems="center"
-          width="100%"
-          gap={1}
-        >
-          <Box display="flex" justifyContent={"space-between"} alignItems="center" sx={{width:'120px',border:'3px solid #fff',borderRadius:'10px',bgcolor:'rgba(255, 255, 255, 0.2)'}} >
-            <IconButton
-              onClick={handleDecrement}
-              color="primary"
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          pb: 2,
+          px: 2,
+          width: '100%',
+          fontFamily:'Outfit',
+          backgroundColor: isHovered ? '#ffa726' : '#ffa726',
+        }}
+      >
+        {cartItem && lastAddedProductId === data.id ? (
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            width="100%"
+            gap={1}
+          >
+            <Box display="flex" justifyContent={"space-between"} alignItems="center" sx={{width:'120px',border:'3px solid #fff',borderRadius:'10px',bgcolor:'rgba(255, 255, 255, 0.2)'}} >
+              <IconButton
+                onClick={handleDecrement}
+                color="primary"
+                size="small"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+              >
+                <RemoveIcon sx={{color:'black'}} />
+              </IconButton>
+              <Typography variant="body1" mx={2}>
+                {cartItem.quantity}
+              </Typography>
+              <IconButton
+                onClick={handleIncrement}
+                color="primary"
+                size="small"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+              >
+                <AddIcon sx={{color:'black'}} />
+              </IconButton>
+            </Box>
+            <Button
+              onClick={handleRemoveFromCart}
               size="small"
+              color="#f57c00"
+              variant="contained"
+              sx={{
+                width: '85%',
+                backgroundColor: "#f57c00",
+                mt: 1,
+                color: 'white',
+                fontWeight: 'bold',
+                borderRadius: '10px',
+                '&:hover': {
+                  backgroundColor: '#f57c00',
+                  border: '#fff',
+                },
+              }}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
-              <RemoveIcon sx={{color:'black'}} />
-            </IconButton>
-            <Typography variant="body1" mx={2}>
-              {cartItem.quantity}
-            </Typography>
-            <IconButton
-              onClick={handleIncrement}
-              color="primary"
-              size="small"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-            >
-              <AddIcon sx={{color:'black'}} />
-            </IconButton>
+              Remove from Cart
+            </Button>
           </Box>
+        ) : (
           <Button
-            onClick={handleRemoveFromCart}
-            size="small"
-            color="#f57c00"
+            onClick={handleAddToCart}
+            size="medium"
+            color="primary"
             variant="contained"
             sx={{
-              width: '85%',
-              backgroundColor: "#f57c00",
-              mt: 1,
-              color: 'white',
-              fontWeight: 'bold',
+              width: '100%',
               borderRadius: '10px',
-              '&:hover': {
-                backgroundColor: '#f57c00',
-                border: '#fff',
-              },
+              mt: 1,
+              backgroundColor: '#f57c00',
+              '&:hover': { backgroundColor: '#f57c00' },
             }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
-            Remove from Cart
+            Add to Cart
           </Button>
-        </Box>
-      ) : (
-        <Button
-          onClick={handleAddToCart}
-          size="medium"
-          color="primary"
-          variant="contained"
-          sx={{
-            width: '100%',
-            borderRadius: '10px',
-            mt: 1,
-            backgroundColor: '#f57c00',
-            '&:hover': { backgroundColor: '#f57c00' },
-          }}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
-          Add to Cart
-        </Button>
-      )}
-    </CardActions>
+        )}
+      </CardActions>
     </Card>
   );
 };

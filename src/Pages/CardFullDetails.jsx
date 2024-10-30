@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // FullCardPage.js
 import React, { useState } from 'react';
 import { Box, Typography, Card, CardMedia, CardContent, Button, useTheme, Rating, IconButton } from '@mui/material';
@@ -15,6 +16,8 @@ const FullCardPage = ({ products, setNotificationBarVisible }) => {
   const cartItems = useSelector((state) => state.cart.items);
   const cartItem = cartItems.find((item) => item.id === product.id);
   const [isHovered, setIsHovered] = useState(false);
+
+  const convertToINR = (usd) => usd * 83;
 
   if (!product) {
     return (
@@ -127,14 +130,13 @@ const FullCardPage = ({ products, setNotificationBarVisible }) => {
           <Typography
             fontFamily={'Outfit'}
             variant="h5"
-            color="primary"
+            color="black"
             sx={{
               fontWeight: 'bold',
               mb: 3,
-              color: theme.palette.primary.main,
             }}
           >
-            Price: ${product.price}
+            Price: ₹{convertToINR(product.price).toFixed(2)}
           </Typography>
 
           {/* Cart Button Section */}
