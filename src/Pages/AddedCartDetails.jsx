@@ -27,23 +27,24 @@ const CartPage = ({ setNotificationBarVisible }) => {
   };
 
   const handlePayment = () => {
-    setLoading(true);
-    setTimeout(() => {
-      const isSuccess = Math.random() > 0.1;
-      if (isSuccess) {
-        setPaymentStatus('success');
-        setSnackbarOpen(true);
-        setLoading(false);
-        setTimeout(() => {
-          navigate('/');
-          dispatch(resetCart());
-        }, 2000);
-      } else {
-        setPaymentStatus('failure');
-        setSnackbarOpen(true);
-        setLoading(false);
-      }
-    }, 4000);
+    // setLoading(true);
+    // setTimeout(() => {
+    //   const isSuccess = Math.random() > 0.1;
+    //   if (isSuccess) {
+    //     setPaymentStatus('success');
+    //     setSnackbarOpen(true);
+    //     setLoading(false);
+    //     setTimeout(() => {
+    //       navigate('/');
+    //       dispatch(resetCart());
+    //     }, 2000);
+    //   } else {
+    //     setPaymentStatus('failure');
+    //     setSnackbarOpen(true);
+    //     setLoading(false);
+    //   }
+    // }, 4000);
+    navigate('/payment');  
   };
 
   const handleIncrement = (id) => {

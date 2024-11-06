@@ -54,7 +54,7 @@ const ResponsiveCard = ({ data }) => {
     <Card
       sx={{
         width: { xs: '90%', sm: '250px', md: '350px' },
-        minWidth:'250px',
+        minWidth:'300px',
         maxWidth:'350px',
         m: 'auto',
         boxShadow: 6,

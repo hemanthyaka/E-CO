@@ -11,9 +11,9 @@ import './Redux/Store';
 import './App.css';
 import CartNotificationBar from "./Pages/AddtocartBar";
 import Products from "./Pages/Products";
-import PaymentForm from "./Pages/Payment";
-import UserCard from "./Pages/Users/UserCard";
+// import UserCard from "./Pages/Users/UserCard";
 import Users from "./Pages/Users/Users";
+import PaymentPage from "./Pages/PaymentPage";
 // import LandingPage from "./Pages/LandingPage";
 
 const App = () => {
@@ -68,7 +68,7 @@ const App = () => {
           <Route path="/product/:id" element={<FullCardPage products={products}  setNotificationBarVisible={setNotificationBarVisible} />} /> {/* Pass products to FullCardPage */}
         <Route path="/products" element={<Products products={products} />} />
         <Route path="/users" element={<Users user={users} />} />
-        <Route path="/payment" element={<PaymentForm />} />
+        <Route path="/payment" element={<PaymentPage />} />
         </Routes>
         {notificationBarVisible && <CartNotificationBar />}
         <Footer />
