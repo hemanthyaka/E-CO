@@ -1,8 +1,9 @@
 import React from "react";
 import { Box, Grid, Typography, TextField, Button, IconButton } from "@mui/material";
-import { Facebook, Twitter, Instagram, LinkedIn, YouTube } from "@mui/icons-material";
+import { Facebook, Instagram, LinkedIn, YouTube } from "@mui/icons-material";
 import AcUnitIcon from '@mui/icons-material/AcUnit';
 import { Link } from "react-router-dom";
+import XIcon from '@mui/icons-material/X';
 
 
 const Footer = () => {
@@ -66,7 +67,7 @@ const Footer = () => {
             </IconButton>
             <IconButton sx={{ color: "white" }}>
             <Link to={'https://x.com/Yaka_hemanth?t=ZsGE1A5degIx09U4DJ5lwg&s=09'} target="_blank" style={{color:'white'}} >
-              <Twitter  />
+              <XIcon  />
               </Link>
             </IconButton>
             <IconButton sx={{ color: "white" }}>

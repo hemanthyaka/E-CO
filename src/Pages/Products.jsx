@@ -75,9 +75,9 @@ const Products = ({ products }) => {
       </Box>
 
       {/* Display Products for the Selected Category */}
-      <Box  display="flex" flex={10} flexWrap={"wrap"} gap={4} justifyContent="space-evenly">
+      <Box  display="flex"  flexWrap={"wrap"} gap={4}  paddingLeft={"15px"} sx={{justifyContent:{xs:"center",md:"start"}}} >
         {productsToDisplay.map((product, index) => (
-          <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
+          <Grid item key={index} xs={12} sm={6} md={4} lg={3}  >
             <ResponsiveCard data={product} />
           </Grid>
         ))}
