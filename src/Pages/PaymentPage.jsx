@@ -63,7 +63,7 @@ const PaymentPage = () => {
   };
   
   return (
-    <Box mt={5} width="400px" mx="auto" minHeight="80vh">
+    <Box mt={15} width="400px" mx="auto" minHeight="80vh">
       {!paymentMethod ? (
         <Box textAlign="center">
           <Typography variant="h5" mb={3}>
