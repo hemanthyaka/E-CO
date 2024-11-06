@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -13,11 +14,17 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
 import { useNavigate, useLocation } from 'react-router-dom'; // Import useLocation
+import { useDispatch } from 'react-redux';
+import { resetCart } from '../Redux/Action';
 
-const pages = ['Products', 'Users', 'Cart'];
-const settings = [];
 
 function Navbar() {
+
+  const [isLoggedIn, setIsLoggedIn] = React.useState(true);
+  const dispatch = useDispatch();
+
+  const pages = ['Products', 'Users', 'Cart'];
+  const settings = [isLoggedIn ? 'Logout' : 'Login'];
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
@@ -57,6 +64,25 @@ function Navbar() {
         break;
     }
     handleCloseNavMenu();
+  };
+
+  const handleUserSettings = (setting) => {
+    switch (setting) {
+      case 'Login':
+        navigate('/login'); // Navigate to the login page
+        break;
+      case 'Signup':
+        navigate('/signup'); // Navigate to the signup page
+        break;
+      case 'Logout':
+        // Handle logout logic (clear user session, etc.)
+        dispatch(resetCart());
+        navigate('/');
+        break;
+      default:
+        break;
+    }
+    handleCloseUserMenu();
   };
 
   return (
@@ -145,7 +171,7 @@ function Navbar() {
                   my: 2,
                   color: 'white',
                   display: 'block',
-                  borderBottom: location.pathname.includes(page.toLowerCase()) ? '2px solid white' : 'none', // Add bottom border if active
+                  borderBottom: location.pathname.includes(page.toLowerCase()) ? '2px solid white' : 'none',
                 }}
               >
                 {page}
@@ -175,7 +201,7 @@ function Navbar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={() => handleUserSettings(setting)}>
                   <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
                 </MenuItem>
               ))}

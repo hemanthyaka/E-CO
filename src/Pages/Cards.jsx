@@ -23,7 +23,6 @@ const ResponsiveCard = ({ data }) => {
   const lastAddedProductId = useSelector((state) => state.cart.lastAddedProductId);
   const cartItem = cartItems.find((item) => item.id === data.id);
 
-  // Conversion rate (example: 1 USD = 83 INR)
   const convertToINR = (usd) => usd * 83;
 
   const handleAddToCart = (event) => {
@@ -54,8 +53,8 @@ const ResponsiveCard = ({ data }) => {
     <Card
       sx={{
         width: { xs: '90%', sm: '250px', md: '350px' },
-        minWidth:'300px',
-        maxWidth:'350px',
+        minWidth: '300px',
+        maxWidth: '350px',
         m: 'auto',
         boxShadow: 6,
         borderRadius: 4,
@@ -80,8 +79,8 @@ const ResponsiveCard = ({ data }) => {
           position: 'relative',
           borderRadius: '4px 4px 0 0',
           width: '100%',
-          height:'250px',
-          p:10,
+          height: '250px',
+          p: 10,
         }}
       >
         <CardMedia
@@ -97,7 +96,7 @@ const ResponsiveCard = ({ data }) => {
           }}
         />
       </Box>
-      <CardContent sx={{ padding: 3,bgcolor:'#ffa726',fontFamily:'Outfit' }}>
+      <CardContent sx={{ padding: 3, bgcolor: '#ffa726', fontFamily: 'Outfit' }}>
         <Typography
           variant="h6"
           fontWeight="bold"
@@ -120,12 +119,12 @@ const ResponsiveCard = ({ data }) => {
           color="text.secondary"
           sx={{
             minHeight: '80px',
-            height:'81px',
+            height: '81px',
             overflowY: 'auto',
             fontSize: '0.95rem',
-            overflow:'auto'
+            overflow: 'auto',
           }}
-          className='custom-scrollbar'
+          className="custom-scrollbar"
         >
           {data.description}
         </Typography>
@@ -138,7 +137,7 @@ const ResponsiveCard = ({ data }) => {
           pb: 2,
           px: 2,
           width: '100%',
-          fontFamily:'Outfit',
+          fontFamily: 'Outfit',
           backgroundColor: isHovered ? '#ffa726' : '#ffa726',
         }}
       >
@@ -150,7 +149,17 @@ const ResponsiveCard = ({ data }) => {
             width="100%"
             gap={1}
           >
-            <Box display="flex" justifyContent={"space-between"} alignItems="center" sx={{width:'120px',border:'3px solid #fff',borderRadius:'10px',bgcolor:'rgba(255, 255, 255, 0.2)'}} >
+            <Box
+              display="flex"
+              justifyContent={"space-between"}
+              alignItems="center"
+              sx={{
+                width: '120px',
+                border: '3px solid #fff',
+                borderRadius: '10px',
+                bgcolor: 'rgba(255, 255, 255, 0.2)',
+              }}
+            >
               <IconButton
                 onClick={handleDecrement}
                 color="primary"
@@ -158,7 +167,7 @@ const ResponsiveCard = ({ data }) => {
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
               >
-                <RemoveIcon sx={{color:'black'}} />
+                <RemoveIcon sx={{ color: 'black' }} />
               </IconButton>
               <Typography variant="body1" mx={2}>
                 {cartItem.quantity}
@@ -170,7 +179,7 @@ const ResponsiveCard = ({ data }) => {
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
               >
-                <AddIcon sx={{color:'black'}} />
+                <AddIcon sx={{ color: 'black' }} />
               </IconButton>
             </Box>
             <Button

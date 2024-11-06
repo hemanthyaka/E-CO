@@ -57,11 +57,11 @@ const PaymentPage = () => {
         color: '#3399cc'
       }
     };
-  
+    
     const razorpay = new window.Razorpay(options);
     razorpay.open();
   };
-  
+
   return (
     <Box mt={15} width="400px" mx="auto" minHeight="80vh">
       {!paymentMethod ? (

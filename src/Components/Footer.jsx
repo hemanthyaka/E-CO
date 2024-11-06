@@ -1,7 +1,8 @@
 import React from "react";
 import { Box, Grid, Typography, TextField, Button, IconButton } from "@mui/material";
-import { Facebook, Twitter, Instagram, LinkedIn } from "@mui/icons-material";
+import { Facebook, Twitter, Instagram, LinkedIn, YouTube } from "@mui/icons-material";
 import AcUnitIcon from '@mui/icons-material/AcUnit';
+import { Link } from "react-router-dom";
 
 
 const Footer = () => {
@@ -59,16 +60,29 @@ const Footer = () => {
           </Typography>
           <Box>
             <IconButton sx={{ color: "white" }}>
-              <Facebook />
+              <Link to={'https://www.facebook.com/chinni.cr.7?mibextid=ZbWKwL'} target="_blank" style={{color:'white'}} >
+              <Facebook  />
+              </Link>
             </IconButton>
             <IconButton sx={{ color: "white" }}>
-              <Twitter />
+            <Link to={'https://x.com/Yaka_hemanth?t=ZsGE1A5degIx09U4DJ5lwg&s=09'} target="_blank" style={{color:'white'}} >
+              <Twitter  />
+              </Link>
             </IconButton>
             <IconButton sx={{ color: "white" }}>
-              <Instagram />
+            <Link to={'https://www.instagram.com/_hemanth_yaka_?igsh=MWV0ZXZvczljN2tpeQ=='} target="_blank" style={{color:'white'}} >
+              <Instagram  />
+              </Link>
             </IconButton>
             <IconButton sx={{ color: "white" }}>
-              <LinkedIn />
+            <Link to={'https://www.linkedin.com/in/yaka-hemanth-ba111227a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app'} target="_blank" style={{color:'white'}} >
+              <LinkedIn  />
+              </Link>
+            </IconButton>
+            <IconButton sx={{ color: "white" }}>
+            <Link to={'https://youtube.com/@yakahemanth?si=0cu6pNoc08t07UWk'} target="_blank" style={{color:'white'}} >
+              <YouTube  />
+              </Link>
             </IconButton>
           </Box>
         </Grid>
@@ -76,7 +90,7 @@ const Footer = () => {
         {/* Newsletter Subscription */}
         <Grid item xs={12} sm={6} md={3}>
           <Typography variant="h6" fontFamily={'Outfit'} gutterBottom>
-            Subscribe to Our Newsletter
+            Subscribe to Our Youtube Channel
           </Typography>
           <Typography variant="body2" fontFamily={'Outfit'} sx={{ marginBottom: "10px" }}>
             Stay updated with the latest offers and products.
